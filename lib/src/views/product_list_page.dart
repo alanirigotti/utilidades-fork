@@ -32,6 +32,10 @@ class _ProductListPageState extends State<ProductListPage> {
       context: context,
       builder: (_) => ProductForm(produto: produto, controller: _controller),
     );
+
+    if(resultado == true) {
+      _loadProdutos();
+    }
   }
 
   @override
