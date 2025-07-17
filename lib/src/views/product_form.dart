@@ -82,8 +82,8 @@ class _ProductFormState extends State<ProductForm> {
       // pertence ao dialog
       actions: [
         TextButton(onPressed: () {}, child: Text("Cancelar")),
-        ElevatedButton(onPressed: () {}, child: Text("Salvar")),
-      ],
+        ElevatedButton(onPressed: () {}, child: Text("Salvar")),  
+      ], 
     );
   }
 }

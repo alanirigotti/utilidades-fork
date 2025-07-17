@@ -29,5 +29,11 @@ final List<MenuModel> appMenuItems = [
     icon: Icons.production_quantity_limits,
     route: "/produtos",
     page: ProductListPage(),
+  ),  
+  MenuModel(
+    title: "Pessoa (sqlite)",
+    icon: Icons.people,
+    route: "/pessoas",
+    page: PersonView(),
   ),
 ];
