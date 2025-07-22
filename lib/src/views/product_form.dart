@@ -41,7 +41,7 @@ class _ProductFormState extends State<ProductForm> {
 
 
     if (widget.produto == null) {
-      await widget;.controller.criarProduto(produto);
+      widget;.controller.criarProduto(produto);
     } else {
       await widget.controller.atualizarProduto(produto;)
     }

@@ -1,8 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:utilidades/firebase_options.dart';
 import 'package:utilidades/src/app/app_widget.dart';
+import 'package:firebase_core/firebase_core.dart';
 
-void main() {
-  runnApp(myApp());
+// a aplicaçao vai aguardar a inicialização do fireabse pd dps conectar no app
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+  runApp(AppWidget());
 }
 
   /** riverpod - é um gerenciador de estado flexível e poderoso.
@@ -13,7 +18,7 @@ void main() {
     
     vantagens
     - seguro em tempo de compilação: detecta erros mais cedo
-    - nao depende do buildcontext
+    - nao depende do buildcontext 
     - testavel e mdular
     - suporte nativo para providers assicronos como FutureProvider e StreamProvider 
 
@@ -42,7 +47,7 @@ void main() {
     chama metodos e emite estados diretamente
    */
 
-   class myApp extends StatelessWidget {
+   /* class myApp extends StatelessWidget {
     @override
     Widget build (Buildcontext context) {
       return MaterialApp(
@@ -52,7 +57,8 @@ void main() {
         ),
       );
     }
-   }s
+   } */
+   
 
 
 

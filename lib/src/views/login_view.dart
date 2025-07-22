@@ -14,10 +14,10 @@ class _LoginViewState extends State<LoginView> {
   final _controller = LoginController();
   final _usernameController = TextEditingController();
   final _passwordController = TextEditingController();
-  String _message = '';
+  final String _message = '';
   bool _isLoading = false;
-  
-/*   void _handleLogin() async{
+
+  /*   void _handleLogin() async{
     final success = await _controller.login(
       _usernameController.text,
       _passwordController.text
@@ -32,41 +32,39 @@ class _LoginViewState extends State<LoginView> {
       });
     }
   } */
- void _handleLogin() async{
-  setState(() {
-    _isLoading = true;
-  });
+  void _handleLogin() async {
+    setState(() {
+      _isLoading = true;
+    });
 
-  final user = UserModel(
-    username : _usernameController.text.trim(),
-    password : _passwordController.text.trim()
-  );
-
-  final success = await _controller.login(user);
-
-  setState(() {
-    _isLoading = false;
-  });
-
-  if(success){
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(content: Text("Login efetuado com sucesso"))
+    final user = UserModel(
+      username: _usernameController.text.trim(),
+      password: _passwordController.text.trim(),
     );
 
-    Navigator.pushReplacementNamed(context, '/home');
-  }else{
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(content: Text("Dados de login incorretos"))
-    );
+    final success = await _controller.login(user);
+
+    setState(() {
+      _isLoading = false;
+    });
+
+    if (success) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text("Login efetuado com sucesso")),
+      );
+
+      Navigator.pushReplacementNamed(context, '/home');
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text("Dados de login incorretos")),
+      );
+    }
   }
- }
-
-
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("Login"),),
+      appBar: AppBar(title: Text("Login")),
       body: Padding(
         padding: EdgeInsets.all(16),
         child: Column(
@@ -74,38 +72,37 @@ class _LoginViewState extends State<LoginView> {
           children: [
             Padding(
               padding: EdgeInsets.only(bottom: 30),
-              child: Image.asset("assets/images/utility.png", width: 200,),
+              child: Image.asset("assets/images/utility.png", width: 200),
             ),
             TextField(
               controller: _usernameController,
               decoration: InputDecoration(
                 labelText: "Usuário",
                 border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(12)
-                )
+                  borderRadius: BorderRadius.circular(12),
+                ),
               ),
             ),
-            SizedBox(height: 10,),
+            SizedBox(height: 10),
             TextField(
               controller: _passwordController,
               decoration: InputDecoration(
                 labelText: "Senha",
                 border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(12)
-                )
+                  borderRadius: BorderRadius.circular(12),
+                ),
               ),
               obscureText: true,
             ),
-            SizedBox(height: 10,),
-            _isLoading ?
-            const CircularProgressIndicator() : 
-            
-            ElevatedButton(
-              onPressed: _handleLogin, 
-              child: Text("entrar")
-            ),
-            SizedBox(height: 10,),
-            Text(_message, style: TextStyle(color: Colors.red),)
+            SizedBox(height: 10),
+            _isLoading
+                ? const CircularProgressIndicator()
+                : ElevatedButton(
+                  onPressed: _handleLogin,
+                  child: Text("entrar"),
+                ),
+            SizedBox(height: 10),
+            Text(_message, style: TextStyle(color: Colors.red)),
           ],
         ),
       ),

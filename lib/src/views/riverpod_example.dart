@@ -7,6 +7,8 @@ final contadorProvider = StateProvider((ref) => 0);
 
 // uso do ui
 class RiverpodExample extends ConsumerWidget {
+  const RiverpodExample({super.key});
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     // substitui o setState

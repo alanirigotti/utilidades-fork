@@ -39,12 +39,12 @@ class ProductService {
   }
 
   Future<void> create(ProductModel produto) async {
-    final _token = await _getToken();
+    final token = await _getToken();
 
     await http.post(
       Uri.parse('$baseUrl/produtos'),
       headers: {
-        'Authorization': 'Baerer $_token',
+        'Authorization': 'Baerer $token',
         'Content-Type': 'application/json',
       },
       body: jsonEncode(produto.toJson()),
@@ -52,12 +52,12 @@ class ProductService {
   }
 
   Future<void> update(ProductModel produto) async {
-    final _token = await _getToken();
+    final token = await _getToken();
 
     await http.put(
       Uri.parse('$baseUrl/produtos/${produto.id}'),
       headers: {
-        'Authorization': 'Baerer $_token',
+        'Authorization': 'Baerer $token',
         'Content-Type': 'application/json',
       },
       body: jsonEncode(produto.toJson()),
@@ -65,11 +65,11 @@ class ProductService {
   }
 
   Future<void> delete(int id) async {
-    final _token = await _getToken();
+    final token = await _getToken();
 
     await http.delete(
       Uri.parse('$baseUrl/produtos/$id'),
-      headers: {'Authorization': 'Baerer $_token'},
+      headers: {'Authorization': 'Baerer $token'},
     );
   }
 }

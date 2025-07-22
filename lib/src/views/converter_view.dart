@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter/widgets.dart';
 import 'package:utilidades/src/controllers/converter_controller.dart';
 import 'package:utilidades/src/models/converter_model.dart';
 
@@ -17,14 +15,14 @@ class _ConverterViewState extends State<ConverterView> {
   Unit selectFrom = Unit.meter;
   Unit selectTo = Unit.centimeter;
   String result = '';
-  
+
   @override
-  void initState(){
+  void initState() {
     super.initState();
     controller.InitializeModel();
   }
 
-  void convert(){
+  void convert() {
     setState(() {
       controller.setInputValue(inputController.text);
       controller.setUnits(selectFrom, selectTo);
@@ -49,7 +47,7 @@ class _ConverterViewState extends State<ConverterView> {
               Expanded(
                 child: unitDropdown(
                   selectFrom,
-                  (u) => setState(() => selectFrom = u)
+                  (u) => setState(() => selectFrom = u),
                 ),
               ),
               SizedBox(width: 10),
@@ -58,15 +56,15 @@ class _ConverterViewState extends State<ConverterView> {
               Expanded(
                 child: unitDropdown(
                   selectTo,
-                  (u) => setState(() => selectTo = u)
+                  (u) => setState(() => selectTo = u),
                 ),
-              )
+              ),
             ],
           ),
           SizedBox(height: 20),
           ElevatedButton(onPressed: convert, child: Text("CONVERTER")),
           SizedBox(height: 20),
-          Text("Resultado: $result", style: TextStyle(fontSize: 18),)
+          Text("Resultado: $result", style: TextStyle(fontSize: 18)),
         ],
       ),
     );
@@ -75,20 +73,20 @@ class _ConverterViewState extends State<ConverterView> {
   DropdownButton<Unit> unitDropdown(
     Unit currentValue,
     ValueChanged<Unit> onChanged,
-  ){
+  ) {
     return DropdownButton<Unit>(
       value: currentValue,
-      onChanged: (Unit? newValue){
-        if(newValue != null) onChanged(newValue);
+      onChanged: (Unit? newValue) {
+        if (newValue != null) onChanged(newValue);
       },
       isExpanded: true,
-      items: Unit.values.map((unit){
-        return DropdownMenuItem<Unit>(
-          value: unit,
-          child: Text(ConverterModel.getUnitName(unit)),
-        );
-      }).toList(),
+      items:
+          Unit.values.map((unit) {
+            return DropdownMenuItem<Unit>(
+              value: unit,
+              child: Text(ConverterModel.getUnitName(unit)),
+            );
+          }).toList(),
     );
   }
-  
 }

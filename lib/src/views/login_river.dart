@@ -3,6 +3,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:utilidades/src/provider/login_provider.dart';
 
 class LoginRiver extends ConsumerWidget {
+  const LoginRiver({super.key});
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final state = ref.watch(loginProvider);
