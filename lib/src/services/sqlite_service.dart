@@ -1,6 +1,6 @@
 import 'package:path/path.dart';
-import 'package:utilidades/src/models/person_model.dart';
 import 'package:sqflite/sqflite.dart';
+import 'package:utilidades/src/models/person_model.dart';
 
 class SqliteService {
   // internal faz o controle de fluxo, garante que só vai ser criado uma unica vez
@@ -11,10 +11,10 @@ class SqliteService {
 
   static Database? _db;
 
-  Future<Database> get db async {
+  Future<Database?> get db async {
     //se nao foi iniciado o banco de dados, cria o db e retorna ele
-    _db ??= await _initDB('app.db');
-    return _db!;
+    _db = await _initDB('app.db');
+    return _db;
   }
 
   Future<Database> _initDB(String name) async {
@@ -35,17 +35,17 @@ class SqliteService {
   Future<int> insertPerson(PersonModel person) async {
     final database = await db;
     // pega os dados do model e converte-os p map
-    return database.insert('pessoas', person.toMap());
+    return database!.insert('pessoas', person.toMap());
   }
 
   Future<List<PersonModel>> getAllPersons() async {
     final database = await db;
-    final result = await database.query('pessoas');
+    final result = await database!.query('pessoas');
     return result.map((e) => PersonModel.fromMap(e)).toList();
   }
 
   Future<void> deletePerson(int id) async {
     final database = await db;
-    await database.delete('pessoas', where: 'id = ?', whereArgs: [id]);
+    await database?.delete('pessoas', where: 'id = ?', whereArgs: [id]);
   }
 }

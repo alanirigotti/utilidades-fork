@@ -1,37 +1,31 @@
 import 'package:flutter/material.dart';
 import 'package:utilidades/src/controllers/usuario_controller.dart';
 
-class FirebaseLoginView extends StatefulWidget {
-  const FirebaseLoginView({super.key});
+class FirebaseRegisterView extends StatefulWidget {
+  const FirebaseRegisterView({super.key});
 
   @override
-  State<FirebaseLoginView> createState() => _FirebaseLoginViewState();
+  State<FirebaseRegisterView> createState() => _FirebaseRegisterViewState();
 }
 
-class _FirebaseLoginViewState extends State<FirebaseLoginView> {
+class _FirebaseRegisterViewState extends State<FirebaseRegisterView> {
   bool _loading = false;
-  String? _erro = null;
-  final UsuarioController _controller = UsuarioController();
+  String? _erro;
   final _formKey = GlobalKey<FormState>();
+  final UsuarioController _controller = UsuarioController();
+  final _nomeController = TextEditingController();
   final _emailController = TextEditingController();
   final _senhaController = TextEditingController();
 
-  //o fluxo seguirá a criação de conta e dps de criado volta p login
-  void _abrirCadastro() {
-    Navigator.push(
-      context,
-      MaterialPageRoute(builder: (_) => const FirebaseLoginView()),
-    );
-  }
-
-  void _login() async {
+  void _cadastrar() async {
     if (_formKey.currentState!.validate()) {
       setState(() {
         _loading = true;
         _erro = null;
       });
 
-      final usuario = await _controller.autenticar(
+      final usuario = await _controller.cadastrar(
+        _nomeController.text,
         _emailController.text,
         _senhaController.text,
       );
@@ -42,12 +36,12 @@ class _FirebaseLoginViewState extends State<FirebaseLoginView> {
 
       if (usuario != null) {
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text("Login realizado com sucesso")),
+          const SnackBar(content: Text('Usuário cadastrado com sucesso')),
         );
-        Navigator.pushReplacementNamed(context, '/home');
+        Navigator.pop(context);
       } else {
         setState(() {
-          _erro = 'E-mail ou senha inválidos';
+          _erro = "Erro ao cadastrar o usuário";
         });
       }
     }
@@ -56,7 +50,7 @@ class _FirebaseLoginViewState extends State<FirebaseLoginView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("Login com firebase")),
+      appBar: AppBar(title: Text('Cadastro firebase')),
       body: Padding(
         padding: EdgeInsets.all(16),
         child: Form(
@@ -64,37 +58,43 @@ class _FirebaseLoginViewState extends State<FirebaseLoginView> {
           child: Column(
             children: [
               if (_erro != null) ...[
-                Text(_erro!, style: TextStyle(color: Colors.red)),
-                SizedBox(height: 10),
+                Text(_erro!, style: const TextStyle(color: Colors.red)),
+                SizedBox(height: 20),
               ],
               TextFormField(
-                controller: _emailController,
-                decoration: InputDecoration(labelText: "E-mail"),
+                controller: _nomeController,
+                decoration: InputDecoration(labelText: 'Nome'),
                 validator:
                     (value) =>
                         value == null || value.isEmpty
-                            ? "Informe o e-mail"
+                            ? 'Informe seu nome'
+                            : null,
+              ),
+              TextFormField(
+                controller: _emailController,
+                decoration: InputDecoration(labelText: 'E-mail'),
+                validator:
+                    (value) =>
+                        value == null || value.isEmpty
+                            ? 'Informe seu e-mail'
                             : null,
               ),
               TextFormField(
                 controller: _senhaController,
-                obscureText: true,
-                decoration: InputDecoration(labelText: "Senha"),
+                decoration: InputDecoration(labelText: 'Senha'),
                 validator:
                     (value) =>
                         value == null || value.length < 6
-                            ? "Senha inválida"
+                            ? 'Senha inválida'
                             : null,
               ),
-              SizedBox(height: 20),
-              //botao ou loading
+              const SizedBox(height: 20),
               _loading
                   ? const CircularProgressIndicator()
-                  : ElevatedButton(onPressed: _login, child: Text('Entrar')),
-              TextButton(
-                onPressed: _abrirCadastro,
-                child: const Text('Criar conta'),
-              ),
+                  : ElevatedButton(
+                    onPressed: () => _cadastrar,
+                    child: Text('Cadastrar'),
+                  ),
             ],
           ),
         ),

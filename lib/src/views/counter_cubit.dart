@@ -7,7 +7,12 @@ class CounterCubit extends Cubit<init> {
 
     void increment() => emit(state +1);
     void decrement() => emit(state - 1);
+}
+ 
+class CounterState {
+  final int counter; 
 
+  CounterState({required this.counter});
 }
 
 class CounterPage extends StatelessWidget {
