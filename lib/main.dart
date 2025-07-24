@@ -4,6 +4,8 @@ import 'package:utilidades/firebase_options.dart';
 import 'package:utilidades/src/app/app_widget.dart';
 import 'package:firebase_core/firebase_core.dart';
 
+//ver pacotes desatualizados: flutter pub outdated
+//para atualizar pacotes: flutter pub upgrade --major-versions
 // a aplicaçao vai aguardar a inicialização do fireabse pd dps conectar no app
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -73,7 +75,3 @@ void main() async {
       );
     }
    } */
-   
-
-
-
